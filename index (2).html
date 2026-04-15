@@ -1,0 +1,651 @@
+
+<style>
+  :root {
+    --saffron: #E07B39;
+    --saffron-light: #FDF0E7;
+    --green-dark: #1A6B3A;
+    --green-mid: #2E8B57;
+    --green-light: #EAF5EE;
+    --gold: #C8960C;
+    --gold-light: #FBF5E0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); }
+  .form-wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 0 2rem;
+  }
+  .trust-name-bar {
+    background: var(--green-dark);
+    color: #fff;
+    text-align: center;
+    padding: 10px 16px 8px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    border-radius: 0;
+  }
+  .trust-name-bar .trust-sub {
+    font-size: 11px;
+    font-weight: 400;
+    opacity: 0.82;
+    margin-top: 2px;
+    letter-spacing: 0.04em;
+  }
+  .form-header {
+    text-align: center;
+    padding: 1.5rem 1.5rem 1.2rem;
+    border-bottom: 2px solid var(--saffron);
+    margin-bottom: 1.5rem;
+  }
+  .header-badge {
+    display: inline-block;
+    background: var(--saffron);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .form-header h1 {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .form-header .subtitle {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+  }
+  .section-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px 10px;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+  }
+  .section-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-saffron { background: var(--saffron); }
+  .dot-green { background: var(--green-mid); }
+  .dot-gold { background: var(--gold); }
+  .section-title {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    flex: 1;
+  }
+  .section-title-kn {
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    opacity: 0.7;
+  }
+  .section-body {
+    padding: 14px 16px;
+  }
+  .field-grid {
+    display: grid;
+    gap: 10px;
+  }
+  .col-2 { grid-template-columns: 1fr 1fr; }
+  .col-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .col-1 { grid-template-columns: 1fr; }
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    margin-bottom: 4px;
+  }
+  label .kn {
+    font-weight: 400;
+    opacity: 0.75;
+    font-size: 11px;
+  }
+  .req { color: var(--saffron); margin-left: 2px; }
+  input[type=text], input[type=date], input[type=tel], input[type=email], input[type=number], select, textarea {
+    width: 100%;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--color-text-primary);
+    background: var(--color-background-secondary);
+    border: 0.5px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 8px 10px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--saffron);
+    box-shadow: 0 0 0 2px rgba(224,123,57,0.12);
+  }
+  textarea { resize: vertical; min-height: 64px; line-height: 1.5; }
+  .upload-area {
+    border: 1px dashed var(--color-border-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 14px;
+    text-align: center;
+    cursor: pointer;
+    background: var(--color-background-secondary);
+    transition: border-color 0.15s;
+  }
+  .upload-area:hover { border-color: var(--saffron); }
+  .upload-icon {
+    width: 20px; height: 20px;
+    margin: 0 auto 6px;
+    display: block;
+  }
+  .upload-area span {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+  }
+  .toggle-group {
+    display: flex;
+    gap: 8px;
+  }
+  .toggle-btn {
+    padding: 7px 20px;
+    font-size: 13px;
+    border: 0.5px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    background: var(--color-background-secondary);
+    color: var(--color-text-primary);
+    transition: all 0.15s;
+    font-family: var(--font-sans);
+  }
+  .toggle-btn.active {
+    background: var(--saffron);
+    border-color: var(--saffron);
+    color: #fff;
+  }
+  .tc-box {
+    background: var(--gold-light);
+    border: 0.5px solid rgba(200,150,12,0.35);
+    border-radius: var(--border-radius-md);
+    padding: 14px 16px;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+  .tc-box h4 {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--green-dark);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .tc-box ol {
+    padding-left: 16px;
+  }
+  .tc-box ol li {
+    margin-bottom: 6px;
+  }
+  .declaration-box {
+    background: var(--saffron-light);
+    border: 0.5px solid rgba(224,123,57,0.3);
+    border-radius: var(--border-radius-md);
+    padding: 12px 14px;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .declaration-box .kn-decl {
+    margin-top: 6px;
+    opacity: 0.8;
+    font-size: 11px;
+  }
+  .checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    margin-bottom: 8px;
+  }
+  .checkbox-row input[type=checkbox] {
+    width: 15px; height: 15px;
+    margin-top: 2px;
+    accent-color: var(--saffron);
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .action-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 0 4px;
+    margin-top: 1.5rem;
+  }
+  .btn-reset {
+    padding: 9px 20px;
+    font-size: 13px;
+    border: 0.5px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-md);
+    background: transparent;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    font-family: var(--font-sans);
+  }
+  .btn-submit {
+    padding: 9px 24px;
+    font-size: 13px;
+    font-weight: 500;
+    border: none;
+    border-radius: var(--border-radius-md);
+    background: var(--green-dark);
+    color: #fff;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    transition: opacity 0.15s;
+  }
+  .btn-submit:hover { opacity: 0.88; }
+  .loan-conditional { display: none; }
+  .loan-conditional.show { display: grid; }
+  .spouse-conditional { display: none; }
+  .spouse-conditional.show { display: grid; }
+  @media (max-width: 520px) {
+    .col-2, .col-3 { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="form-wrap">
+  <!-- Trust Name Bar -->
+  <div class="trust-name-bar">
+    Women's World Interact Association (R)
+    <div class="trust-sub">ವಿಮೆನ್ಸ್ ವರ್ಲ್ಡ್ ಇಂಟರ್ಯಾಕ್ಟ್ ಅಸೋಸಿಯೇಷನ್ (ನೋ.)</div>
+  </div>
+
+  <div class="form-header">
+    <div class="header-badge">ಸಾಲ ಮುಕ್ತ ಜೀವನ · Debt Free Life</div>
+    <h1>Community Membership Registration</h1>
+    <p class="subtitle">ದಯವಿಟ್ಟು ಎಲ್ಲಾ ಅಗತ್ಯ ಕ್ಷೇತ್ರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ · Please fill in all required fields</p>
+  </div>
+
+  <!-- Personal Information -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-dot dot-saffron"></div>
+      <span class="section-title">Personal Information <span class="section-title-kn">/ ವೈಯಕ್ತಿಕ ಮಾಹಿತಿ</span></span>
+    </div>
+    <div class="section-body">
+      <div class="field-grid col-2" style="margin-bottom:10px;">
+        <div>
+          <label>First name / ಹೆಸರು <span class="req">*</span></label>
+          <input type="text" placeholder="e.g. Ramesh">
+        </div>
+        <div>
+          <label>Last name / ಉಪನಾಮ <span class="req">*</span></label>
+          <input type="text" placeholder="e.g. Kumar">
+        </div>
+      </div>
+      <div class="field-grid col-2" style="margin-bottom:10px;">
+        <div>
+          <label>Father's name / ತಂದೆಯ ಹೆಸರು <span class="req">*</span></label>
+          <input type="text" placeholder="e.g. Suresh Kumar">
+        </div>
+        <div>
+          <label>Nationality / ರಾಷ್ಟ್ರೀಯತೆ <span class="req">*</span></label>
+          <input type="text" placeholder="e.g. Indian" value="Indian">
+        </div>
+      </div>
+      <div class="field-grid col-3" style="margin-bottom:10px;">
+        <div>
+          <label>Date of birth / ಜನ್ಮ ದಿನಾಂಕ <span class="req">*</span></label>
+          <input type="date">
+        </div>
+        <div>
+          <label>Gender / ಲಿಂಗ <span class="req">*</span></label>
+          <select>
+            <option value="">Select</option>
+            <option>Male / ಪುರುಷ</option>
+            <option>Female / ಮಹಿಳೆ</option>
+            <option>Other / ಇತರೆ</option>
+          </select>
+        </div>
+        <div>
+          <label>Marital status / ವೈವಾಹಿಕ ಸ್ಥಿತಿ</label>
+          <select id="marital-status" onchange="toggleSpouse(this.value)">
+            <option value="">Select</option>
+            <option value="single">Single / ಅವಿವಾಹಿತ</option>
+            <option value="married">Married / ವಿವಾಹಿತ</option>
+            <option value="widowed">Widowed / ವಿಧವೆ/ವಿಧುರ</option>
+            <option value="divorced">Divorced / ವಿಚ್ಛೇದಿತ</option>
+          </select>
+        </div>
+      </div>
+      <!-- Spouse name — shows only if Married -->
+      <div class="spouse-conditional field-grid col-1" id="spouse-field" style="margin-bottom:10px;">
+        <div>
+          <label>Spouse's name / ಪತಿ/ಪತ್ನಿ ಹೆಸರು <span class="req">*</span></label>
+          <input type="text" placeholder="e.g. Sunita Kumar">
+        </div>
+      </div>
+      <div class="field-grid col-2">
+        <div>
+          <label>Religion / ಧರ್ಮ</label>
+          <input type="text" placeholder="Optional / ಐಚ್ಛಿಕ">
+        </div>
+        <div>
+          <label>Caste / category / ಜಾತಿ</label>
+          <input type="text" placeholder="Optional / ಐಚ್ಛಿಕ">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Details -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-dot dot-green"></div>
+      <span class="section-title">Contact Details <span class="section-title-kn">/ ಸಂಪರ್ಕ ವಿವರ</span></span>
+    </div>
+    <div class="section-body">
+      <div class="field-grid col-2" style="margin-bottom:10px;">
+        <div>
+          <label>Mobile number / ಮೊಬೈಲ್ <span class="req">*</span></label>
+          <input type="tel" placeholder="+91 98765 43210">
+        </div>
+        <div>
+          <label>Alternate phone / ಪರ್ಯಾಯ</label>
+          <input type="tel" placeholder="Optional / ಐಚ್ಛಿಕ">
+        </div>
+      </div>
+      <div class="field-grid col-1" style="margin-bottom:10px;">
+        <div>
+          <label>Email address / ಇಮೇಲ್</label>
+          <input type="email" placeholder="example@email.com">
+        </div>
+      </div>
+      <div class="field-grid col-1" style="margin-bottom:10px;">
+        <div>
+          <label>Residential address / ವಾಸದ ವಿಳಾಸ <span class="req">*</span></label>
+          <textarea placeholder="House no., street, locality... / ಮನೆ ಸಂಖ್ಯೆ, ಬೀದಿ, ಏರಿಯಾ..."></textarea>
+        </div>
+      </div>
+      <div class="field-grid col-3">
+        <div>
+          <label>Village / Town / ಗ್ರಾಮ/ಪಟ್ಟಣ <span class="req">*</span></label>
+          <input type="text">
+        </div>
+        <div>
+          <label>District / ಜಿಲ್ಲೆ <span class="req">*</span></label>
+          <input type="text">
+        </div>
+        <div>
+          <label>State / ರಾಜ್ಯ <span class="req">*</span></label>
+          <input type="text">
+        </div>
+      </div>
+      <div class="field-grid col-1" style="margin-top:10px;">
+        <div>
+          <label>PIN code / ಪಿನ್ ಕೋಡ್ <span class="req">*</span></label>
+          <input type="text" placeholder="560001">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Identity Documents -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-dot dot-gold"></div>
+      <span class="section-title">Identity Documents <span class="section-title-kn">/ ಗುರುತಿನ ದಾಖಲೆಗಳು</span></span>
+    </div>
+    <div class="section-body">
+      <div class="field-grid col-2" style="margin-bottom:12px;">
+        <div>
+          <label>Aadhaar number / ಆಧಾರ್ <span class="req">*</span></label>
+          <input type="text" placeholder="XXXX XXXX XXXX">
+        </div>
+        <div>
+          <label>PAN number / ಪ್ಯಾನ್</label>
+          <input type="text" placeholder="ABCDE1234F">
+        </div>
+      </div>
+      <div class="field-grid col-2">
+        <div>
+          <label>Passport photo / ಪಾಸ್‌ಪೋರ್ಟ್ ಫೋಟೋ <span class="req">*</span></label>
+          <div class="upload-area">
+            <svg class="upload-icon" viewBox="0 0 20 20" fill="none">
+              <path d="M10 13V7M10 7L7.5 9.5M10 7L12.5 9.5" stroke="var(--saffron)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3 14v1.5A1.5 1.5 0 004.5 17h11a1.5 1.5 0 001.5-1.5V14" stroke="var(--color-text-secondary)" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <span>Click to upload photo</span>
+          </div>
+        </div>
+        <div>
+          <label>Aadhaar copy / ಆಧಾರ್ ನಕಲು</label>
+          <div class="upload-area">
+            <svg class="upload-icon" viewBox="0 0 20 20" fill="none">
+              <path d="M10 13V7M10 7L7.5 9.5M10 7L12.5 9.5" stroke="var(--color-text-secondary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3 14v1.5A1.5 1.5 0 004.5 17h11a1.5 1.5 0 001.5-1.5V14" stroke="var(--color-text-secondary)" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <span>Image / PDF</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Professional & Education -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-dot dot-saffron"></div>
+      <span class="section-title">Professional &amp; Education <span class="section-title-kn">/ ವೃತ್ತಿ ಮತ್ತು ಶಿಕ್ಷಣ</span></span>
+    </div>
+    <div class="section-body">
+      <div class="field-grid col-2" style="margin-bottom:10px;">
+        <div>
+          <label>Highest education / ಗರಿಷ್ಠ ಶಿಕ್ಷಣ</label>
+          <select>
+            <option value="">Select</option>
+            <option>No formal education / ಶಿಕ್ಷಣ ಇಲ್ಲ</option>
+            <option>Primary / ಪ್ರಾಥಮಿಕ</option>
+            <option>Secondary / ಮಾಧ್ಯಮಿಕ</option>
+            <option>PUC / Diploma</option>
+            <option>Graduate / ಪದವೀಧರ</option>
+            <option>Postgraduate / ಸ್ನಾತಕೋತ್ತರ</option>
+          </select>
+        </div>
+        <div>
+          <label>Occupation / ಉದ್ಯೋಗ <span class="req">*</span></label>
+          <select>
+            <option value="">Select</option>
+            <option>Farmer / ರೈತ</option>
+            <option>Self-employed / ಸ್ವಯಂ ಉದ್ಯೋಗ</option>
+            <option>Salaried / ವೇತನದಾರ</option>
+            <option>Daily wage / ದಿನಗೂಲಿ</option>
+            <option>Business / ವ್ಯವಹಾರ</option>
+            <option>Unemployed / ನಿರುದ್ಯೋಗಿ</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-grid col-2">
+        <div>
+          <label>Annual household income (₹) / ವಾರ್ಷಿಕ ಆದಾಯ</label>
+          <input type="number" placeholder="e.g. 150000" min="0">
+        </div>
+        <div>
+          <label>Number of dependents / ಅವಲಂಬಿತರ ಸಂಖ್ಯೆ</label>
+          <input type="number" placeholder="e.g. 4" min="0">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loan Details -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-dot dot-green"></div>
+      <span class="section-title">Financial Background <span class="section-title-kn">/ ಆರ್ಥಿಕ ಹಿನ್ನೆಲೆ</span></span>
+    </div>
+    <div class="section-body">
+      <div style="margin-bottom:12px;">
+        <label style="margin-bottom:8px;">Does the candidate or any family member have an active loan? / ಸಕ್ರಿಯ ಸಾಲ ಇದೆಯೇ? <span class="req">*</span></label>
+        <div class="toggle-group">
+          <button class="toggle-btn" id="loan-yes" onclick="toggleLoan('yes')">Yes / ಹೌದು</button>
+          <button class="toggle-btn active" id="loan-no" onclick="toggleLoan('no')">No / ಇಲ್ಲ</button>
+        </div>
+      </div>
+      <div class="loan-conditional field-grid col-3" id="loan-fields" style="margin-bottom:10px; gap:10px;">
+        <div>
+          <label>Total loan amount (₹) / ಒಟ್ಟು ಸಾಲ <span class="req">*</span></label>
+          <input type="number" placeholder="e.g. 50000" min="0">
+        </div>
+        <div>
+          <label>Outstanding balance (₹) / ಬಾಕಿ ಮೊತ್ತ</label>
+          <input type="number" placeholder="e.g. 30000" min="0">
+        </div>
+        <div>
+          <label>Interest rate (% p.a.) / ಬಡ್ಡಿ ದರ <span class="req">*</span></label>
+          <input type="number" placeholder="e.g. 24" min="0" max="100">
+        </div>
+      </div>
+      <div class="loan-conditional field-grid col-2" id="loan-fields-2" style="gap:10px;">
+        <div>
+          <label>Lender type / ಸಾಲದಾತ ವಿಧ</label>
+          <select>
+            <option value="">Select</option>
+            <option>Bank / ಬ್ಯಾಂಕ್</option>
+            <option>Microfinance / ಮೈಕ್ರೋಫೈನಾನ್ಸ್</option>
+            <option>Moneylender / ಮಾರ್ವಾಡಿ</option>
+            <option>SHG / ಸ್ವಸಹಾಯ ಗುಂಪು</option>
+            <option>Family / Friend / ಕುಟುಂಬ</option>
+          </select>
+        </div>
+        <div>
+          <label>Purpose of loan / ಸಾಲದ ಉದ್ದೇಶ</label>
+          <select>
+            <option value="">Select</option>
+            <option>Agriculture / ಕೃಷಿ</option>
+            <option>Medical / ವೈದ್ಯಕೀಯ</option>
+            <option>Education / ಶಿಕ್ಷಣ</option>
+            <option>Business / ವ್ಯವಹಾರ</option>
+            <option>Housing / ಮನೆ</option>
+            <option>Other / ಇತರೆ</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Terms & Conditions -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-dot dot-gold"></div>
+      <span class="section-title">Terms &amp; Conditions <span class="section-title-kn">/ ನಿಯಮ ಮತ್ತು ಷರತ್ತುಗಳು</span></span>
+    </div>
+    <div class="section-body">
+      <div class="tc-box">
+        <h4>Women's World Interact Association (R) — Membership Terms &amp; Conditions</h4>
+        <ol>
+          <li><strong>Non-Refundable Registration Fee:</strong> The membership registration fee paid at the time of enrolment is strictly non-refundable under any circumstances, including but not limited to withdrawal of application, change of mind, relocation, or inability to attend programmes. The Association reserves the sole right to waive this condition at its discretion, and no waiver in one case shall create a precedent for any other case.</li>
+
+          <li><strong>No Financial Liability / Loan Repayment:</strong> Women's World Interact Association (R) is a charitable trust engaged solely in financial literacy, skills training, livelihood support, and awareness programmes. The Association does not, directly or indirectly, repay, settle, guarantee, co-sign, or assume any loan, debt, liability, or financial obligation of any member or their family. Members expressly acknowledge that membership does not confer any right to seek or expect monetary assistance, loan clearance, or debt settlement from the Association.</li>
+
+          <li><strong>Scope of Support:</strong> The Association's support is limited strictly to providing financial knowledge, budgeting skills, livelihood training, entrepreneurship guidance, and community empowerment programmes to help members build capacity to manage and overcome their own financial challenges. No commitment of any outcome or result is made or implied.</li>
+
+          <li><strong>Accuracy of Information:</strong> The member undertakes that all information furnished in this form is true, accurate, and complete. Any misrepresentation, suppression of material facts, or submission of forged documents shall result in immediate cancellation of membership without refund, and the Association reserves the right to take appropriate legal action.</li>
+
+          <li><strong>Membership Cancellation:</strong> The Association reserves the right to suspend or terminate the membership of any individual at any time, without prior notice, if the member is found to have violated these terms, engaged in conduct prejudicial to the interests of the Association or its members, or provided false information.</li>
+
+          <li><strong>No Guarantee of Programme Availability:</strong> Participation in specific programmes, workshops, or training sessions is subject to availability, eligibility criteria, and the Association's scheduling. Membership does not guarantee inclusion in any particular programme.</li>
+
+          <li><strong>Data Privacy:</strong> Personal information collected in this form will be used solely for the purposes of membership administration and programme delivery by Women's World Interact Association (R). The Association will not sell or commercially exploit member data. However, data may be shared with government bodies or regulatory authorities if required by law.</li>
+
+          <li><strong>Amendment of Terms:</strong> The Association reserves the right to amend, modify, or update these terms and conditions at any time without prior notice. Continued participation in Association programmes following any amendment constitutes acceptance of the revised terms.</li>
+
+          <li><strong>Jurisdiction:</strong> All disputes arising out of or in connection with this membership shall be subject to the exclusive jurisdiction of the courts at Bengaluru, Karnataka, and shall be governed by the laws of India.</li>
+
+          <li><strong>Entire Agreement:</strong> These terms, together with this membership form, constitute the entire agreement between the member and the Association. No verbal representation, promise, or assurance made by any representative of the Association shall be binding unless confirmed in writing by an authorised signatory of the Association.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- Declaration -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-dot dot-saffron"></div>
+      <span class="section-title">Declaration <span class="section-title-kn">/ ಘೋಷಣೆ</span></span>
+    </div>
+    <div class="section-body">
+      <div class="declaration-box">
+        I hereby declare that the information provided above is true, correct, and complete to the best of my knowledge and belief. I understand that providing false or misleading information may result in immediate cancellation of my membership without any refund, and may expose me to legal consequences. I acknowledge that Women's World Interact Association (R) does not repay or settle any loans or debts on behalf of its members, and that membership entitles me only to access the financial literacy and training programmes offered by the Association.
+        <div class="kn-decl">ಮೇಲೆ ನೀಡಲಾದ ಮಾಹಿತಿಯು ನನ್ನ ಜ್ಞಾನ ಮತ್ತು ನಂಬಿಕೆಯ ಪ್ರಕಾರ ಸತ್ಯ, ಸರಿ ಮತ್ತು ಸಂಪೂರ್ಣವಾಗಿದೆ ಎಂದು ಪ್ರಮಾಣಿಸುತ್ತೇನೆ. ವಿಮೆನ್ಸ್ ವರ್ಲ್ಡ್ ಇಂಟರ್ಯಾಕ್ಟ್ ಅಸೋಸಿಯೇಷನ್ (ನೋ.) ಯಾವುದೇ ಸಾಲ ಮರುಪಾವತಿ ಮಾಡುವುದಿಲ್ಲ ಎಂಬುದನ್ನು ಅರ್ಥಮಾಡಿಕೊಂಡಿದ್ದೇನೆ.</div>
+      </div>
+      <label class="checkbox-row">
+        <input type="checkbox" id="agree-tc">
+        <span>I have read and agree to the Terms &amp; Conditions of Women's World Interact Association (R) / ನಾನು ನಿಯಮ ಮತ್ತು ಷರತ್ತುಗಳನ್ನು ಓದಿ ಒಪ್ಪಿಕೊಂಡಿದ್ದೇನೆ</span>
+      </label>
+      <label class="checkbox-row">
+        <input type="checkbox" id="agree-norefund">
+        <span>I understand that the registration fee is non-refundable and that the Association does not repay any loans or debts on my behalf / ನೋಂದಣಿ ಶುಲ್ಕ ಮರಳಿ ಬಾರದು ಮತ್ತು ಸಂಸ್ಥೆ ನನ್ನ ಸಾಲ ತೀರಿಸುವುದಿಲ್ಲ ಎಂದು ಅರ್ಥಮಾಡಿಕೊಂಡಿದ್ದೇನೆ</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="action-row">
+    <button class="btn-reset" onclick="document.querySelectorAll('input,select,textarea').forEach(e=>{if(e.type==='checkbox'||e.type==='radio')e.checked=false;else e.value=''});toggleLoan('no');toggleSpouse('');">Reset form / ಮರುಹೊಂದಿಸಿ</button>
+    <button class="btn-submit" onclick="submitForm()">Submit application / ಅರ್ಜಿ ಸಲ್ಲಿಸಿ</button>
+  </div>
+</div>
+
+<script>
+function toggleLoan(val) {
+  const yesBtn = document.getElementById('loan-yes');
+  const noBtn = document.getElementById('loan-no');
+  const fields = document.getElementById('loan-fields');
+  const fields2 = document.getElementById('loan-fields-2');
+  if (val === 'yes') {
+    yesBtn.classList.add('active');
+    noBtn.classList.remove('active');
+    fields.classList.add('show');
+    fields2.classList.add('show');
+  } else {
+    noBtn.classList.add('active');
+    yesBtn.classList.remove('active');
+    fields.classList.remove('show');
+    fields2.classList.remove('show');
+  }
+}
+function toggleSpouse(val) {
+  const spouseField = document.getElementById('spouse-field');
+  if (val === 'married') {
+    spouseField.classList.add('show');
+  } else {
+    spouseField.classList.remove('show');
+  }
+}
+function submitForm() {
+  const agreeTc = document.getElementById('agree-tc');
+  const agreeNoRefund = document.getElementById('agree-norefund');
+  if (!agreeTc.checked || !agreeNoRefund.checked) {
+    alert('ದಯವಿಟ್ಟು ಎಲ್ಲಾ ನಿಯಮಗಳಿಗೆ ಒಪ್ಪಿಗೆ ನೀಡಿ.\nPlease agree to all terms and conditions before submitting.');
+    return;
+  }
+  alert('ಅರ್ಜಿ ಯಶಸ್ವಿಯಾಗಿ ಸಲ್ಲಿಸಲಾಗಿದೆ!\nApplication submitted successfully!');
+}
+</script>
